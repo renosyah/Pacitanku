@@ -1,6 +1,8 @@
 package com.ardian.pacitanku.di.component;
 
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.ui.activity.login.LoginActivity;
+import com.ardian.pacitanku.ui.activity.register.RegisterActivity;
 
 import dagger.Component;
 
@@ -12,6 +14,6 @@ import dagger.Component;
 public interface ActivityComponent {
 
     // fungsi yg akan digunakan untuk diinject di activity ExploreActivity
-    // void inject(ExploreActivity exploreActivity);
-
+    void inject(LoginActivity loginActivity);
+    void inject(RegisterActivity registerActivity);
 }

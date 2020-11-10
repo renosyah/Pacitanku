@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Pacitanku</string>
+    <string name="or">atau</string>
+    <string name="login">Masuk</string>
+    <string name="daftar">Daftar</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_fail">Email or password is invalid</string>
+    <string name="empty_login">Email or password must not be empty!</string>
+    <string name="update_fail">Failed update user data</string>
+    <string name="register_fail">Failed register new user</string>
+    <string name="empty_register">Please fill all register form</string>
+    <string name="username">Username</string>
 </resources>
