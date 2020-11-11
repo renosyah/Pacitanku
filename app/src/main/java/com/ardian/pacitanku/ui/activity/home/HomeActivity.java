@@ -21,6 +21,8 @@ import com.ardian.pacitanku.util.Unit;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -56,6 +58,32 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         presenter.attach(this);
         presenter.subscribe();
 
+        addEvent = findViewById(R.id.addevent_button);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                presenter.addEvent(new EventModel(
+                        UUID.randomUUID().toString(),
+                        "pacitan konser",
+                        Calendar.getInstance().getTime().getTime(),
+                        "https://cdn.idntimes.com/content-images/community/2020/07/img-20200728-142312-cf0cd752dc3016ea2b578284adcd4f37_600x400.jpg",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+                ));
+            }
+        });
+
+        scroll = findViewById(R.id.scroll);
+        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    limit += 5;
+                    presenter.getEvents(limit);
+                }
+            }
+        });
+
         this.introLayout = new Intro(context,findViewById(R.id.home_intro));
         introLayout.setContent(
                 "https://cdn.idntimes.com/content-images/community/2020/07/img-20200728-142312-cf0cd752dc3016ea2b578284adcd4f37_600x400.jpg",
@@ -89,34 +117,17 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
             public void invoke(Integer o) {
                 switch (o){
                     case NavMenu.HOME_MENU:
-                        introLayout.setVisibility(View.VISIBLE );
+                        addEvent.hide();
+                        introLayout.setVisibility(View.VISIBLE);
                         eventLayout.showSmallTittle();
                         break;
                     case NavMenu.EVENT_MENU:
+                        addEvent.show();
                         introLayout.setVisibility(View.GONE);
                         eventLayout.showBigTittle();
                         break;
                     default:
                         break;
-                }
-            }
-        });
-
-        addEvent = findViewById(R.id.addevent_button);
-        addEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        scroll = findViewById(R.id.scroll);
-        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
-                    limit += 5;
-                    presenter.getEvents(limit);
                 }
             }
         });

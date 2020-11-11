@@ -36,7 +36,7 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        view.showErrorGetEvents(error.getMessage());
                     }
                 });
     }
@@ -44,7 +44,7 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
     @Override
     public void addEvent(@NonNull EventModel e) {
         DatabaseReference ref = database.getReference(BuildConfig.DB);
-        ref.child("events").child(e.id).setValue(e.clone());
+        ref.child("events").push().setValue(e.clone());
     }
 
     @Override
