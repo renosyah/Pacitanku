@@ -15,6 +15,7 @@ import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.ui.activity.home.HomeActivity;
 import com.ardian.pacitanku.ui.activity.register.RegisterActivity;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityCon
                 startActivity(new Intent(context, RegisterActivity.class));
             }
         });
-
+        presenter.checkSession();
     }
 
     @Override
@@ -81,8 +82,15 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityCon
 
     @Override
     public void onLogin(@NonNull FirebaseUser user) {
-        Toast.makeText(context,"User login : " + user.getUid(),Toast.LENGTH_LONG).show();
         email.setText("");password.setText("");
+        startActivity(new Intent(context, HomeActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onLoginSession(@NonNull FirebaseUser user) {
+        startActivity(new Intent(context, HomeActivity.class));
+        finish();
     }
 
     @Override

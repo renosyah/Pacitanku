@@ -2,6 +2,8 @@ package com.ardian.pacitanku.di.module;
 
 import android.app.Activity;
 
+import com.ardian.pacitanku.ui.activity.home.HomeActivityContract;
+import com.ardian.pacitanku.ui.activity.home.HomeActivityPresenter;
 import com.ardian.pacitanku.ui.activity.login.LoginActivityContract;
 import com.ardian.pacitanku.ui.activity.login.LoginActivityPresenter;
 import com.ardian.pacitanku.ui.activity.register.RegisterActivityContract;
@@ -37,12 +39,16 @@ public class ActivityModule {
 
 
     // fungsi untuk provide activity
-     @Provides
-     public LoginActivityContract.Presenter provideLoginActivityPresenter() {
+    @Provides
+    public LoginActivityContract.Presenter provideLoginActivityPresenter() {
         return new LoginActivityPresenter();
-     }
+    }
     @Provides
     public RegisterActivityContract.Presenter provideRegisterActivityPresenter() {
         return new RegisterActivityPresenter();
+    }
+    @Provides
+    public HomeActivityContract.Presenter provideHomeActivityPresenter() {
+        return new HomeActivityPresenter();
     }
 }

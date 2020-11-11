@@ -40,6 +40,12 @@ public class LoginActivityPresenter implements LoginActivityContract.Presenter {
     }
 
     @Override
+    public void checkSession() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) view.onLogin(user);
+    }
+
+    @Override
     public void subscribe() {
         mAuth = FirebaseAuth.getInstance();
     }

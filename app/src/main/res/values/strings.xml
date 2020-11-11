@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Pacitanku</string>
-    <string name="or">atau</string>
-    <string name="login">Masuk</string>
-    <string name="daftar">Daftar</string>
+    <string name="or">or</string>
+    <string name="login">Login</string>
+    <string name="daftar">Register</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login_fail">Email or password is invalid</string>
@@ -11,4 +11,9 @@
     <string name="register_fail">Failed register new user</string>
     <string name="empty_register">Please fill all register form</string>
     <string name="username">Username</string>
+    <string name="home">Home</string>
+    <string name="event">Event</string>
+    <string name="event_list">Event List</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.ui.activity.home.HomeActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 import javax.inject.Inject;
@@ -98,8 +100,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterActiv
 
     @Override
     public void onUpdate(@NonNull FirebaseUser user) {
-        Toast.makeText(context,"User Added : " + user.getUid(),Toast.LENGTH_LONG).show();
         email.setText("");password.setText("");username.setText("");
+        startActivity(new Intent(context, HomeActivity.class));
+        finish();
     }
 
     @Override
