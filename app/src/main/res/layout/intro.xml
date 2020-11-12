@@ -35,6 +35,20 @@
                         android:scaleType="fitXY"
                         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+                    <TextView
+                        android:background="@drawable/rounded_shape_accent"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="end|bottom"
+                        android:layout_margin="10dp"
+                        android:textSize="14sp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail" />
+
                 </FrameLayout>
 
             </androidx.cardview.widget.CardView>

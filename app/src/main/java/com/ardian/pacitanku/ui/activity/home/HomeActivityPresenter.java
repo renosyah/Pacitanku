@@ -41,11 +41,6 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
                 });
     }
 
-    @Override
-    public void addEvent(@NonNull EventModel e) {
-        DatabaseReference ref = database.getReference(BuildConfig.DB);
-        ref.child("events").push().setValue(e.clone());
-    }
 
     @Override
     public void subscribe() {

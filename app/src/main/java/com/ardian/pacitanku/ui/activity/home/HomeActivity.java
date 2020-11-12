@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.ui.activity.detailEvent.DetailEventActivity;
 import com.ardian.pacitanku.ui.util.EventLayout;
 import com.ardian.pacitanku.ui.util.Intro;
 import com.ardian.pacitanku.ui.util.NavMenu;
@@ -63,13 +65,6 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
             @Override
             public void onClick(View v) {
 
-                presenter.addEvent(new EventModel(
-                        UUID.randomUUID().toString(),
-                        "pacitan konser",
-                        Calendar.getInstance().getTime().getTime(),
-                        "https://cdn.idntimes.com/content-images/community/2020/07/img-20200728-142312-cf0cd752dc3016ea2b578284adcd4f37_600x400.jpg",
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                ));
             }
         });
 
@@ -96,7 +91,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         eventLayout.setContent(events, new Unit<EventModel>() {
             @Override
             public void invoke(EventModel o) {
-                Toast.makeText(context,"on click",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(context, DetailEventActivity.class);
+                i.putExtra("event",o);
+                startActivity(i);
             }
         },new Unit<EventModel>() {
             @Override

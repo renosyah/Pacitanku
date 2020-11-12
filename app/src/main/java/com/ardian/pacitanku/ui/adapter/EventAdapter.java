@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.util.DateFormat;
 import com.ardian.pacitanku.util.Unit;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +47,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         Picasso.get().load(item.imageUrl).into(holder.image);
         holder.title.setText(item.name);
         holder.content.setText(item.description);
-        holder.date.setText(new Date(item.date).toString());
+        holder.date.setText(DateFormat.simpleDate(new Date(item.date)));
 
         holder.opt.setVisibility(View.GONE);
 

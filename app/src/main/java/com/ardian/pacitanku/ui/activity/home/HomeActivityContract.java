@@ -16,6 +16,5 @@ public class HomeActivityContract {
 
     public interface Presenter extends BaseContract.Presenter<View> {
         public void getEvents(@NonNull int limit);
-        public void addEvent(@NonNull EventModel e);
     }
 }

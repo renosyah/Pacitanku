@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @IgnoreExtraProperties
@@ -56,7 +57,6 @@ public class EventModel extends BaseModel {
         this.imageUrl = image;
         this.description = description;
     }
-
 
     public EventModel clone(){
         return new EventModel(this.id,

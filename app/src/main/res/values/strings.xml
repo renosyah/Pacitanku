@@ -16,4 +16,7 @@
     <string name="event_list">Event List</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="detail">Detail</string>
+    <string name="location">Lokasi</string>
+    <string name="description">Deskripsi</string>
 </resources>

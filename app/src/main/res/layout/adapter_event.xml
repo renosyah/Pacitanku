@@ -51,12 +51,33 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/date_textview"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="05/09/2020"
-                    android:textSize="12sp" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/date_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="05/09/2020"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:background="@drawable/rounded_shape_accent"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="end|bottom"
+                        android:textSize="12sp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/title_textview"
@@ -72,6 +93,7 @@
                     android:id="@+id/content_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLines="3"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
                     android:textSize="12sp" />
 
