@@ -12,9 +12,14 @@ public class HomeActivityContract {
         public void showProgressGetEvents(Boolean show);
         public void showErrorGetEvents(String error);
         public void onGetEvents(@NonNull ArrayList<EventModel> event);
+
+        public void showProgressDeleteEvents(Boolean show);
+        public void showErrorDeleteEvents(String error);
+        public void onDeleteEvents();
     }
 
     public interface Presenter extends BaseContract.Presenter<View> {
         public void getEvents(@NonNull int limit);
+        public void deleteEvents(@NonNull String id);
     }
 }

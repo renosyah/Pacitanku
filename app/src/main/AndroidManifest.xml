@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.detailEvent.DetailEventActivity"></activity>
+        <activity android:name=".ui.activity.event.EventActivity"></activity>
+        <activity android:name=".ui.activity.detailEvent.DetailEventActivity" />
         <activity android:name=".ui.activity.home.HomeActivity" />
         <activity android:name=".ui.activity.register.RegisterActivity" />
         <activity android:name=".ui.activity.login.LoginActivity">

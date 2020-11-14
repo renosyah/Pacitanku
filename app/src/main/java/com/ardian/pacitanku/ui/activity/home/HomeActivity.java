@@ -1,9 +1,11 @@
 package com.ardian.pacitanku.ui.activity.home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
 import com.ardian.pacitanku.model.event.EventModel;
 import com.ardian.pacitanku.ui.activity.detailEvent.DetailEventActivity;
+import com.ardian.pacitanku.ui.activity.event.EventActivity;
+import com.ardian.pacitanku.ui.dialog.DeleteDialog;
 import com.ardian.pacitanku.ui.util.EventLayout;
 import com.ardian.pacitanku.ui.util.Intro;
 import com.ardian.pacitanku.ui.util.NavMenu;
@@ -46,6 +50,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
     private int limit = 5;
     private ArrayList<EventModel> events = new ArrayList<>();
 
+    private int EVENT_ACTIVITY_RESULT = 134;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +70,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, EventActivity.class);
+                startActivityForResult(i,EVENT_ACTIVITY_RESULT);
             }
         });
 
@@ -98,12 +105,21 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         },new Unit<EventModel>() {
             @Override
             public void invoke(EventModel o) {
-                Toast.makeText(context,"on edit",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(context, EventActivity.class);
+                i.putExtra("event_edit",o);
+                startActivityForResult(i,EVENT_ACTIVITY_RESULT);
             }
         },new Unit<EventModel>() {
             @Override
             public void invoke(EventModel o) {
-                Toast.makeText(context,"on delete",Toast.LENGTH_SHORT).show();
+
+                new DeleteDialog(context, o.id, new Unit<String>() {
+                    @Override
+                    public void invoke(String id) {
+                        presenter.deleteEvents(id);
+                    }
+                });
+
             }
         });
         eventLayout.setVisibility(View.VISIBLE);
@@ -148,6 +164,30 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         events.clear();
         events.addAll(event);
         eventLayout.notifyAdapter();
+    }
+
+    @Override
+    public void showProgressDeleteEvents(Boolean show) {
+
+    }
+
+    @Override
+    public void showErrorDeleteEvents(String error) {
+        Toast.makeText(context,error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteEvents() {
+        presenter.getEvents(limit);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == EVENT_ACTIVITY_RESULT){
+            presenter.getEvents(limit);
+        }
     }
 
     @Override

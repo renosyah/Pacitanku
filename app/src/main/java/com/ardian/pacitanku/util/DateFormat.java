@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateFormat {
+
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
+
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -17,5 +21,9 @@ public class DateFormat {
     }
     public static String fullDate(Date d) {
         return fullFormat.format(d);
+    }
+
+    public static String simpleTime(Date date) {
+        return simpleTimeFormat.format(date);
     }
 }

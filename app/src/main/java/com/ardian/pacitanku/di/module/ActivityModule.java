@@ -2,6 +2,8 @@ package com.ardian.pacitanku.di.module;
 
 import android.app.Activity;
 
+import com.ardian.pacitanku.ui.activity.event.EventActivityContract;
+import com.ardian.pacitanku.ui.activity.event.EventActivityPresenter;
 import com.ardian.pacitanku.ui.activity.home.HomeActivityContract;
 import com.ardian.pacitanku.ui.activity.home.HomeActivityPresenter;
 import com.ardian.pacitanku.ui.activity.login.LoginActivityContract;
@@ -50,5 +52,9 @@ public class ActivityModule {
     @Provides
     public HomeActivityContract.Presenter provideHomeActivityPresenter() {
         return new HomeActivityPresenter();
+    }
+    @Provides
+    public EventActivityContract.Presenter provideEventActivityPresenter() {
+        return new EventActivityPresenter();
     }
 }

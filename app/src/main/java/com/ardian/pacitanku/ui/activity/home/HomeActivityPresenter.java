@@ -1,6 +1,7 @@
 package com.ardian.pacitanku.ui.activity.home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.model.event.EventModel;
@@ -39,6 +40,18 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
                         view.showErrorGetEvents(error.getMessage());
                     }
                 });
+    }
+
+    @Override
+    public void deleteEvents(@NonNull String id) {
+        DatabaseReference ref = database.getReference(BuildConfig.DB).child("events");
+        ref.child(id).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                view.onDeleteEvents();
+            }
+        });
+
     }
 
 

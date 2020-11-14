@@ -1,6 +1,7 @@
 package com.ardian.pacitanku.di.component;
 
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.ui.activity.event.EventActivity;
 import com.ardian.pacitanku.ui.activity.home.HomeActivity;
 import com.ardian.pacitanku.ui.activity.login.LoginActivity;
 import com.ardian.pacitanku.ui.activity.register.RegisterActivity;
@@ -18,4 +19,5 @@ public interface ActivityComponent {
     void inject(LoginActivity loginActivity);
     void inject(RegisterActivity registerActivity);
     void inject(HomeActivity homeActivity);
+    void inject(EventActivity eventActivity);
 }

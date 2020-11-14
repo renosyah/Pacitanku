@@ -12,38 +12,34 @@ import java.util.Date;
 public class EventModel extends BaseModel {
 
     @PropertyName("id")
-    public String id;
+    public String id = "";
 
     @PropertyName("name")
-    public String name;
+    public String name = "";
 
     @PropertyName("date")
-    public long date;
-
-    @PropertyName("time")
-    public long time;
+    public long date = 0L;
 
     @PropertyName("address")
-    public String address;
+    public String address = "";
 
     @PropertyName("image_url")
-    public String imageUrl;
+    public String imageUrl = "";
 
     @PropertyName("reminder")
-    public long reminder;
+    public long reminder = 0L;
 
     @PropertyName("description")
-    public String description;
+    public String description = "";
 
     public EventModel() {
         super();
     }
 
-    public EventModel(String id, String name, long date, long time, String address, String image,long reminder, String description) {
+    public EventModel(String id, String name, long date, String address, String image,long reminder, String description) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.time = time;
         this.address = address;
         this.imageUrl = image;
         this.reminder = reminder;
@@ -62,7 +58,6 @@ public class EventModel extends BaseModel {
         return new EventModel(this.id,
             this.name,
             this.date,
-            this.time,
             this.address,
             this.imageUrl,
             this.reminder,
