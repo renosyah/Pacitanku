@@ -15,6 +15,7 @@ import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.model.userType.UserType;
 import com.ardian.pacitanku.ui.activity.home.HomeActivity;
 import com.ardian.pacitanku.ui.activity.register.RegisterActivity;
 import com.google.firebase.auth.FirebaseUser;

@@ -52,6 +52,25 @@ public class NavMenu {
         }
     };
 
+    public void setMenu(int m){
+        clear();
+        switch (m){
+            case EVENT_MENU:
+                event.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
+                labelHome.setTextColor(ContextCompat.getColor(context,R.color.colorAccent));
+                currentMenu = EVENT_MENU;
+                break;
+            case HOME_MENU:
+                home.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
+                labelEvent.setTextColor(ContextCompat.getColor(context,R.color.colorAccent));
+                currentMenu = HOME_MENU;
+                break;
+            default:
+                break;
+        }
+        onMenuClick.invoke(currentMenu);
+    }
+
     private void clear() {
         this.home.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary));
         this.event.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary));

@@ -2,15 +2,24 @@ package com.ardian.pacitanku.ui.activity.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
+import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.model.userType.UserType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 public class LoginActivityPresenter implements LoginActivityContract.Presenter {
 
@@ -42,7 +51,7 @@ public class LoginActivityPresenter implements LoginActivityContract.Presenter {
     @Override
     public void checkSession() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) view.onLogin(user);
+        if (user != null) view.onLoginSession(user);
     }
 
     @Override

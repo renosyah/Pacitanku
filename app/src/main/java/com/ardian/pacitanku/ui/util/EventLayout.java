@@ -25,9 +25,15 @@ public class EventLayout {
     }
 
     private EventAdapter adapter;
+    private Boolean enableOpt = false;
+
+    public void setEnableOpt(Boolean enableOpt) {
+        if (adapter != null) adapter.setEnableOpt(enableOpt);
+    }
 
     public void setContent(ArrayList<EventModel> eventModels,Unit<EventModel> onEventClick,Unit<EventModel> onEdit,Unit<EventModel> onDelete){
         adapter = new EventAdapter(context, eventModels, onEventClick,onEdit,onDelete);
+        adapter.setEnableOpt(enableOpt);
         event.setAdapter(adapter);
         event.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false));
     }

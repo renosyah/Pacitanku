@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.ardian.pacitanku.base.BaseContract;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.model.userType.UserType;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -16,10 +18,13 @@ public class HomeActivityContract {
         public void showProgressDeleteEvents(Boolean show);
         public void showErrorDeleteEvents(String error);
         public void onDeleteEvents();
+
+        void onGetUserType(@NonNull UserType userType);
     }
 
     public interface Presenter extends BaseContract.Presenter<View> {
         public void getEvents(@NonNull int limit);
         public void deleteEvents(@NonNull String id);
+        void getUserType(@NonNull String uid);
     }
 }

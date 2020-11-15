@@ -17,6 +17,7 @@ import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
 import com.ardian.pacitanku.di.module.ActivityModule;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.model.userType.UserType;
 import com.ardian.pacitanku.ui.activity.detailEvent.DetailEventActivity;
 import com.ardian.pacitanku.ui.activity.event.EventActivity;
 import com.ardian.pacitanku.ui.dialog.DeleteDialog;
@@ -25,6 +26,8 @@ import com.ardian.pacitanku.ui.util.Intro;
 import com.ardian.pacitanku.ui.util.NavMenu;
 import com.ardian.pacitanku.util.Unit;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
     private NestedScrollView scroll;
 
     private FloatingActionButton addEvent;
+    private Boolean allowAddEvent = false;
 
     private int limit = 5;
     private ArrayList<EventModel> events = new ArrayList<>();
@@ -82,6 +86,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
                 if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
                     limit += 5;
                     presenter.getEvents(limit);
+                    menuLayout.setMenu(NavMenu.EVENT_MENU);
                 }
             }
         });
@@ -135,7 +140,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
                         eventLayout.showSmallTittle();
                         break;
                     case NavMenu.EVENT_MENU:
-                        addEvent.show();
+                        if (allowAddEvent) addEvent.show();
                         introLayout.setVisibility(View.GONE);
                         eventLayout.showBigTittle();
                         break;
@@ -147,6 +152,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
 
         menuLayout.setVisibility(View.VISIBLE);
         presenter.getEvents(limit);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) presenter.getUserType(user.getUid());
     }
 
     @Override
@@ -179,6 +187,15 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
     @Override
     public void onDeleteEvents() {
         presenter.getEvents(limit);
+    }
+
+    @Override
+    public void onGetUserType(@NonNull UserType userType) {
+        if (userType.type.equals(UserType.ADMIN)) {
+            eventLayout.setEnableOpt(true);
+            allowAddEvent = true;
+            addEvent.hide();
+        }
     }
 
 

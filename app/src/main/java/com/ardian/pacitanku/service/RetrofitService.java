@@ -1,5 +1,6 @@
 package com.ardian.pacitanku.service;
 
+import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.model.responseModel.ResponseModel;
 import com.ardian.pacitanku.model.upload.UploadResponse;
 import com.google.gson.Gson;
@@ -40,7 +41,7 @@ public interface RetrofitService {
             Retrofit retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .baseUrl("https://app-demo-api.000webhostapp.com")
+                    .baseUrl(BuildConfig.HOSTING_URL)
                     .build();
 
             // balikan instance

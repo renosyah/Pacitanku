@@ -34,6 +34,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         this.onDelete = onDelete;
     }
 
+
+    private Boolean enableOpt = false;
+
+    public void setEnableOpt(Boolean enableOpt) {
+        this.enableOpt = enableOpt;
+    }
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,13 +64,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
                 onClick.invoke(item);
             }
         });
-        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+        if (enableOpt) holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 holder.opt.setVisibility(holder.opt.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
                 return true;
             }
         });
+
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

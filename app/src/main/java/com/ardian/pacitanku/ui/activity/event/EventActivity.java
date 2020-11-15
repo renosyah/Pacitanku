@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.di.component.ActivityComponent;
 import com.ardian.pacitanku.di.component.DaggerActivityComponent;
@@ -313,7 +314,7 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
 
     @Override
     public void onUploaded(UploadResponse response) {
-        event.imageUrl = "https://app-demo-api.000webhostapp.com" + response.url;
+        event.imageUrl = BuildConfig.HOSTING_URL + response.url;
         presenter.setEvent(event);
     }
 

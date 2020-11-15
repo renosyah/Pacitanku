@@ -1,15 +1,19 @@
 package com.ardian.pacitanku.ui.activity.home;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.model.userType.UserType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -52,6 +56,30 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
             }
         });
 
+    }
+
+    @Override
+    public void getUserType(@NonNull String uid) {
+        database.getReference(BuildConfig.DB)
+                .child("users")
+                .orderByChild("id").equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                            UserType userType = postSnapshot.getValue(UserType.class);
+                            if (userType != null && userType.id.equals(uid)){
+                                view.onGetUserType(userType);
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
 

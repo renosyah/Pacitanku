@@ -3,6 +3,7 @@ package com.ardian.pacitanku.ui.activity.login;
 import androidx.annotation.NonNull;
 
 import com.ardian.pacitanku.base.BaseContract;
+import com.ardian.pacitanku.model.userType.UserType;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -13,7 +14,6 @@ public class LoginActivityContract {
         public void showErrorLogin(String error);
         void onLogin(@NonNull FirebaseUser user);
         void onLoginSession(@NonNull FirebaseUser user);
-
     }
 
     public interface Presenter extends BaseContract.Presenter<View> {
