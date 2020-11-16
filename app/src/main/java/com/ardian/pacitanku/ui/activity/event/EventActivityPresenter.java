@@ -73,7 +73,7 @@ public class EventActivityPresenter implements EventActivityContract.Presenter {
 
     @Override
     public void unsubscribe() {
-
+        subscriptions.clear();
     }
 
     @Override

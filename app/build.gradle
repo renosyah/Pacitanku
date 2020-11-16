@@ -29,6 +29,7 @@ android {
         it.minifyEnabled true
         it.buildConfigField "String", "HOSTING_URL", "\"https://app-demo-api.000webhostapp.com\""
         it.buildConfigField "String", "DB", "\"pacitanku_db\""
+        it.buildConfigField "String", "TOPIC", "\"events\""
         it.buildConfigField "Boolean", "ENABLE_FOREGROUND", "true"
     }
     buildTypes {

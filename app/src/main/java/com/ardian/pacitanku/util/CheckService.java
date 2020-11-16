@@ -1,5 +1,6 @@
 package com.ardian.pacitanku.util;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -38,47 +39,14 @@ public class CheckService {
         return false;
     }
 
-    // melakukan cek service lokasi
-    // dengan parameter yg dibutuhkan adalah
-    // context yg didapat dari activity
-    public static Boolean isGpsIson(Context c) {
-
-        // membuat instance lokasi manajer
-        LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-
-        // deklarasi variabel untuk status
-        // gps aktif
-        boolean gps_enabled = false;
-
-        // internet aktif
-        boolean network_enabled = false;
-
-        // coba
-        try {
-
-            // memanggil provider
-            // dan jika berhasil
-            // akan mengembalikan nilai true
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            // jika terjadi exception
-            // hiraukan
-        } catch(Exception ignore) {}
-
-        // coba
-        try {
-
-            // memanggil provider
-            // dan jika berhasil
-            // akan mengembalikan nilai true
-            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-          // jika terjadi exception
-          // hiraukan
-        } catch(Exception ignore) {}
-
-        // balikkan nilai balik
-        // gps dan internet
-        return gps_enabled && network_enabled;
+    public static boolean isMyServiceRunning(Context c,Class<?> s) {
+        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (s.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

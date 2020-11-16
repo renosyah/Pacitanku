@@ -1,6 +1,7 @@
 package com.ardian.pacitanku.di.component;
 
 import com.ardian.pacitanku.di.module.ActivityModule;
+import com.ardian.pacitanku.ui.activity.detailEvent.DetailEventActivity;
 import com.ardian.pacitanku.ui.activity.event.EventActivity;
 import com.ardian.pacitanku.ui.activity.home.HomeActivity;
 import com.ardian.pacitanku.ui.activity.login.LoginActivity;

@@ -1,6 +1,7 @@
 package com.ardian.pacitanku.service;
 
 import com.ardian.pacitanku.BuildConfig;
+import com.ardian.pacitanku.model.firebaseMessage.FirebaseMessage;
 import com.ardian.pacitanku.model.responseModel.ResponseModel;
 import com.ardian.pacitanku.model.upload.UploadResponse;
 import com.google.gson.Gson;
@@ -8,9 +9,12 @@ import com.google.gson.GsonBuilder;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -20,7 +24,6 @@ public interface RetrofitService {
         @Multipart
         @POST("/api/upload_file.php")
         public Observable<ResponseModel<UploadResponse>> upload(@Part MultipartBody.Part file);
-
 
         // fungsi static yg nantinya akan
         // dipanggil, sama seperti koneksi ke db

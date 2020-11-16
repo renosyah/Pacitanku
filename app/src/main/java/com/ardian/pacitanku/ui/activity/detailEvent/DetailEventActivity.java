@@ -10,13 +10,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
+import com.ardian.pacitanku.di.component.ActivityComponent;
+import com.ardian.pacitanku.di.component.DaggerActivityComponent;
+import com.ardian.pacitanku.di.module.ActivityModule;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.model.firebaseMessage.FirebaseMessage;
 import com.ardian.pacitanku.util.DateFormat;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 public class DetailEventActivity extends AppCompatActivity {
 
@@ -24,7 +34,7 @@ public class DetailEventActivity extends AppCompatActivity {
     private Intent intent;
     private EventModel event;
 
-    private ImageView back,image;
+    private ImageView back,image,push;
     private TextView title,date,description;
     private CardView address;
 
@@ -76,5 +86,6 @@ public class DetailEventActivity extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
+
     }
 }
