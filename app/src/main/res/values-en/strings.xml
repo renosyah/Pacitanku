@@ -33,6 +33,7 @@
     <string name="event_description">Description</string>
     <string name="set_event">Save</string>
     <string name="event_name_example">Example : pacitan is ...</string>
+    <string name="event_date_example">Example : 03/10/2020</string>
     <string name="event_time_example">Example : 14:32</string>
     <string name="event_image_example">Format :  jpg/jpeg/png</string>
     <string name="title_add_event">Add New Event</string>
@@ -45,5 +46,4 @@
     <string name="file_choosed">File choosed</string>
     <string name="notif_push">Notification pushed!</string>
     <string name="foreground_notification_message">Pacitanku Service is running...</string>
-    <string name="event_date_example">Example : 03/10/2020</string>
 </resources>
