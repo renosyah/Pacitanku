@@ -68,7 +68,7 @@ public class NavMenu {
             default:
                 break;
         }
-        onMenuClick.invoke(currentMenu);
+        // onMenuClick.invoke(currentMenu);
     }
 
     private void clear() {

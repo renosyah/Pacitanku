@@ -87,6 +87,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
                     limit += 5;
                     presenter.getEvents(limit);
                     menuLayout.setMenu(NavMenu.EVENT_MENU);
+                } else if (scrollY == 0) {
+                    menuLayout.setMenu(NavMenu.HOME_MENU);
                 }
             }
         });
