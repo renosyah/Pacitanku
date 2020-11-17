@@ -41,21 +41,23 @@ public class EventActivityPresenter implements EventActivityContract.Presenter {
                 data
         );
 
+        DatabaseReference ref = database.getReference(BuildConfig.DB);
+        ref.child("events").child(event.id).setValue(event.clone());
+
         Disposable subscribe = RetrofitService.create("https://go-firebase-notif-sender.herokuapp.com/").push(notifPayload)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(ResponseBody result) throws Exception {
-                        DatabaseReference ref = database.getReference(BuildConfig.DB);
-                        ref.child("events").child(event.id).setValue(event.clone());
                         view.onSetEvent();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.e("error push",throwable.toString());
-                        view.showErrorSetEvent(throwable.getMessage());
+                        // view.showErrorSetEvent(throwable.getMessage());
+                        view.onSetEvent();
                     }
                 });
 
