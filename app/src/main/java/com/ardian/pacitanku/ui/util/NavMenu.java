@@ -52,7 +52,7 @@ public class NavMenu {
         }
     };
 
-    public void setMenu(int m){
+    public void setMenu(int m,Unit<Integer> callBack){
         clear();
         switch (m){
             case EVENT_MENU:
@@ -68,7 +68,7 @@ public class NavMenu {
             default:
                 break;
         }
-        // onMenuClick.invoke(currentMenu);
+        callBack.invoke(currentMenu);
     }
 
     private void clear() {

@@ -86,9 +86,19 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
                 if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
                     limit += 5;
                     presenter.getEvents(limit);
-                    menuLayout.setMenu(NavMenu.EVENT_MENU);
+                    menuLayout.setMenu(NavMenu.EVENT_MENU, new Unit<Integer>() {
+                        @Override
+                        public void invoke(Integer o) {
+                            if (allowAddEvent) addEvent.show();
+                        }
+                    });
                 } else if (scrollY == 0) {
-                    menuLayout.setMenu(NavMenu.HOME_MENU);
+                    menuLayout.setMenu(NavMenu.HOME_MENU, new Unit<Integer>() {
+                        @Override
+                        public void invoke(Integer o) {
+                            addEvent.hide();
+                        }
+                    });
                 }
             }
         });
