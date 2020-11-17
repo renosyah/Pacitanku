@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.util.SerializableSave;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -89,8 +90,12 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
                                     for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                                         EventModel event = postSnapshot.getValue(EventModel.class);
-                                        if (event != null) sendNotification(event.name,event.address);
-                                        break;
+                                        if ((event != null) && (new SerializableSave(ctx,event.id).load() == null)){
+                                            new SerializableSave(ctx,event.id).save(new SerializableSave.SimpleCache(event.id));
+                                            sendNotification(event.name,event.address);
+                                            break;
+                                        }
+
                                     }
                                 }
 
