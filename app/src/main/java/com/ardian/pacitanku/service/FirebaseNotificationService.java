@@ -1,37 +1,46 @@
 package com.ardian.pacitanku.service;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
+import com.ardian.pacitanku.model.event.EventModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
+import static com.ardian.pacitanku.util.DateFormat.ISO_8601_FORMAT;
+import static com.ardian.pacitanku.util.Util.getDate;
+
 public class FirebaseNotificationService extends FirebaseMessagingService {
 
     private Context context;
+    private FirebaseDatabase firebaseDatabase;
     private FirebaseMessaging firebaseMessaging;
+    private IntentFilter s_intentFilter = new IntentFilter();
+    private BroadcastReceiver timeChangedReceiver;
 
     public FirebaseNotificationService() {
         super();
@@ -45,17 +54,61 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     @Override
     public void onCreate() {
         context = this;
+
         firebaseMessaging = FirebaseMessaging.getInstance();
         firebaseMessaging.subscribeToTopic(BuildConfig.TOPIC)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.e("sub","event subscibe");
+                            Log.e("sub","event subscribe");
                         }
                     }
                 });
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        s_intentFilter.addAction(Intent.ACTION_TIME_TICK);
+        timeChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context ctx, Intent intent) {
+                if (intent.getAction() == null){
+                    return;
+                }
+
+                if (intent.getAction().equals(Intent.ACTION_TIME_TICK)){
+
+                    DatabaseReference ref = firebaseDatabase.getReference(BuildConfig.DB);
+                    ref.child("events")
+                            .orderByChild("date_string")
+                            .startAt(ISO_8601_FORMAT.format(getDate(6)))
+                            .endAt(ISO_8601_FORMAT.format(getDate(8)))
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                                        EventModel event = postSnapshot.getValue(EventModel.class);
+                                        if (event != null) sendNotification(event.name,event.address);
+                                        break;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                }
+
+                Log.e("received broadcast", intent.getAction());
+            }
+        };
+
+        registerReceiver(timeChangedReceiver, s_intentFilter);
+
+        Log.e("service","on");
         super.onCreate();
     }
 
@@ -65,6 +118,12 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
             Log.e("data",remoteMessage.getData().toString());
             sendNotification(remoteMessage.getData().get("name"),remoteMessage.getData().get("address"));
         }
+    }
+
+    @Override
+    protected Intent getStartCommandIntent(Intent intent) {
+        registerReceiver(timeChangedReceiver, s_intentFilter);
+        return super.getStartCommandIntent(intent);
     }
 
     private static final int ONGOING_NOTIFICATION_ID = new Random(System.currentTimeMillis()).nextInt(100);
@@ -109,10 +168,17 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            unregisterReceiver(timeChangedReceiver);
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        Log.e("service","off");
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
+        onDestroy();
     }
 }

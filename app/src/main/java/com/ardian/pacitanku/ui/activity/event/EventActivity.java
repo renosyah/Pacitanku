@@ -230,6 +230,7 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
 
                 event.name = name.getText().toString();
                 event.description = description.getText().toString();
+                event.dateString = DateFormat.ISO_8601_FORMAT.format(event.date);
 
                 if (changeImage && uploadFile != null){
                     uploadImage(uploadFile);

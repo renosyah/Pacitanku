@@ -6,6 +6,7 @@ import com.google.firebase.database.PropertyName;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 @IgnoreExtraProperties
@@ -20,6 +21,9 @@ public class EventModel extends BaseModel {
     @PropertyName("date")
     public long date = 0L;
 
+    @PropertyName("date_string")
+    public String dateString = "";
+
     @PropertyName("address")
     public String address = "";
 
@@ -32,21 +36,26 @@ public class EventModel extends BaseModel {
     @PropertyName("description")
     public String description = "";
 
+    @PropertyName("created_at")
+    public long createdAt = Calendar.getInstance().getTime().getTime();
+
     public EventModel() {
         super();
     }
 
-    public EventModel(String id, String name, long date, String address, String image,long reminder, String description) {
+    public EventModel(String id, String name, long date, String dateString, String address, String imageUrl, long reminder, String description, long createdAt) {
         this.id = id;
         this.name = name;
         this.date = date;
+        this.dateString = dateString;
         this.address = address;
-        this.imageUrl = image;
+        this.imageUrl = imageUrl;
         this.reminder = reminder;
         this.description = description;
+        this.createdAt = createdAt;
     }
 
-    public EventModel(String id, String name,long date,String image, String description) {
+    public EventModel(String id, String name, long date, String image, String description) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -58,10 +67,12 @@ public class EventModel extends BaseModel {
         return new EventModel(this.id,
             this.name,
             this.date,
+            this.dateString,
             this.address,
             this.imageUrl,
             this.reminder,
-            this.description
+            this.description,
+            this.createdAt
         );
     }
 }

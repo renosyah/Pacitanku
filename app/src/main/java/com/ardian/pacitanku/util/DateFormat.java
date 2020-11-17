@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateFormat {
+    public static final SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -22,7 +23,6 @@ public class DateFormat {
     public static String fullDate(Date d) {
         return fullFormat.format(d);
     }
-
     public static String simpleTime(Date date) {
         return simpleTimeFormat.format(date);
     }

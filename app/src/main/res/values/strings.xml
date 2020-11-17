@@ -45,4 +45,5 @@
     <string name="empty_event_data">Please Fill all empty form</string>
     <string name="file_choosed">File choosed</string>
     <string name="notif_push">Notification pushed!</string>
+    <string name="foreground_notification_message">Pacitanku Service is running...</string>
 </resources>
