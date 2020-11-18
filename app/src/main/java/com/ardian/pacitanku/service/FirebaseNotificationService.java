@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import com.ardian.pacitanku.BuildConfig;
 import com.ardian.pacitanku.R;
 import com.ardian.pacitanku.model.event.EventModel;
+import com.ardian.pacitanku.ui.activity.detailEvent.DetailEventActivity;
 import com.ardian.pacitanku.util.SerializableSave;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -92,7 +93,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
                                         EventModel event = postSnapshot.getValue(EventModel.class);
                                         if ((event != null) && (new SerializableSave(ctx,event.id).load() == null)){
                                             new SerializableSave(ctx,event.id).save(new SerializableSave.SimpleCache(event.id));
-                                            sendNotification(event.name,event.address);
+                                            sendNotification(event);
                                             break;
                                         }
 
@@ -121,7 +122,11 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData().size() > 0) {
             Log.e("data",remoteMessage.getData().toString());
-            sendNotification(remoteMessage.getData().get("name"),remoteMessage.getData().get("address"));
+
+            EventModel e = new EventModel();
+            e.name = remoteMessage.getData().get("name");
+            e.address = remoteMessage.getData().get("address");
+            sendNotification(e);
         }
     }
 
@@ -133,14 +138,13 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
     private static final int ONGOING_NOTIFICATION_ID = new Random(System.currentTimeMillis()).nextInt(100);
 
-    private void sendNotification(String messageBody,String address) {
+    private void sendNotification(EventModel eventModel) {
 
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + address);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        Intent mapIntent = new Intent(context, DetailEventActivity.class);
+        mapIntent.putExtra("event",eventModel);
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mapIntent.setPackage("com.google.android.apps.maps");
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mapIntent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -151,7 +155,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(context, channelId)
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle(getString(R.string.app_name))
-                        .setContentText(messageBody)
+                        .setContentText(eventModel.name)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
