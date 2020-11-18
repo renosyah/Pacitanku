@@ -30,10 +30,16 @@ public class EventActivityPresenter implements EventActivityContract.Presenter {
     private FirebaseDatabase database;
 
     @Override
-    public void setEvent(@NonNull EventModel event) {
+    public void setEvent(@NonNull EventModel event,@NonNull Boolean enableLoading) {
+
+        if (enableLoading){
+            view.showProgressUpload(true);
+        }
+
         HashMap<String ,String> data = new HashMap<>();
         data.put("name",event.name);
         data.put("address",event.address);
+
 
         NotifPayload notifPayload = new NotifPayload(
                 "AAAAsldiFMw:APA91bEXW9ukrALB1OiZSInImXAIJAqESdbJwX1B-oS1AFn5vocrW2WK27IcR0alEG3RylJ_tyWKzO_SEYASz2VKf0p8JdZLOJFDfckwOUP08c7x3vr8zaCGIyu-fwtOP8kM0LJlZQ2b",
@@ -50,13 +56,18 @@ public class EventActivityPresenter implements EventActivityContract.Presenter {
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(ResponseBody result) throws Exception {
+                        if (enableLoading) {
+                            view.showProgressUpload(false);
+                        }
                         view.onSetEvent();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e("error push",throwable.toString());
-                        // view.showErrorSetEvent(throwable.getMessage());
+                        if (enableLoading) {
+                            view.showProgressUpload(false);
+                        }
+
                         view.onSetEvent();
                     }
                 });

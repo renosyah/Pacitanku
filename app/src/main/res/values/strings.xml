@@ -46,4 +46,5 @@
     <string name="notif_push">Notification pushed!</string>
     <string name="foreground_notification_message">Pacitanku Service is running...</string>
     <string name="event_date_example">Example : 03/10/2020</string>
+    <string name="sending">Mengirim...</string>
 </resources>

@@ -20,7 +20,7 @@ public class EventActivityContract {
     }
 
     public interface Presenter extends BaseContract.Presenter<View> {
-        public void setEvent(@NonNull EventModel event);
+        public void setEvent(@NonNull EventModel event, Boolean enableLoading);
         public void upload(MultipartBody.Part file, Boolean enableLoading);
     }
 }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.ardian.pacitanku.di.module.ActivityModule;
 import com.ardian.pacitanku.model.event.EventModel;
 import com.ardian.pacitanku.model.upload.UploadResponse;
 import com.ardian.pacitanku.ui.dialog.DialogSimpleEditText;
+import com.ardian.pacitanku.ui.util.Loading;
 import com.ardian.pacitanku.util.DateFormat;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -60,6 +62,7 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
     private EventModel event;
     private Boolean changeImage = false;
 
+    private ScrollView eventEditorScrollview;
     private EditText name,date,time,upload,reminder,description;
     private ImageView datePicker,timePicker,uploadPicker,reminderPicker;
     private CardView location;
@@ -67,6 +70,8 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
 
     private int PICK_IMAGE = 103;
     private byte[] uploadFile;
+
+    private Loading loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,11 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
         injectDependency();
         presenter.attach(this);
         presenter.subscribe();
+
+        loading = new Loading(context,findViewById(R.id.loading_layout),getString(R.string.sending));
+        loading.setVisibility(false);
+
+        eventEditorScrollview = findViewById(R.id.event_editor_scrollview);
 
         title = findViewById(R.id.title_textview);
         title.setText(getString(R.string.title_add_event));
@@ -236,7 +246,7 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
                     uploadImage(uploadFile);
                     return;
                 }
-                presenter.setEvent(event);
+                presenter.setEvent(event,true);
             }
         });
 
@@ -289,7 +299,8 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
 
     @Override
     public void showProgressSetEvent(Boolean show) {
-
+        loading.setVisibility(show);
+        eventEditorScrollview.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -305,7 +316,8 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
 
     @Override
     public void showProgressUpload(Boolean show) {
-
+        loading.setVisibility(show);
+        eventEditorScrollview.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -316,7 +328,7 @@ public class EventActivity extends AppCompatActivity implements EventActivityCon
     @Override
     public void onUploaded(UploadResponse response) {
         event.imageUrl = BuildConfig.HOSTING_URL + response.url;
-        presenter.setEvent(event);
+        presenter.setEvent(event,true);
     }
 
     @Override
