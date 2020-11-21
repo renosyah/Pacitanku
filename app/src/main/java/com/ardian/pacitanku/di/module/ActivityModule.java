@@ -40,19 +40,25 @@ public class ActivityModule {
     }
 
 
-    // fungsi untuk provide activity
+    // fungsi untuk provide presenter pada activity login
     @Provides
     public LoginActivityContract.Presenter provideLoginActivityPresenter() {
         return new LoginActivityPresenter();
     }
+
+    // fungsi untuk provide presenter pada activity register
     @Provides
     public RegisterActivityContract.Presenter provideRegisterActivityPresenter() {
         return new RegisterActivityPresenter();
     }
+
+    // fungsi untuk provide presenter pada activity home
     @Provides
     public HomeActivityContract.Presenter provideHomeActivityPresenter() {
         return new HomeActivityPresenter();
     }
+
+    // fungsi untuk provide presenter pada activity event
     @Provides
     public EventActivityContract.Presenter provideEventActivityPresenter() {
         return new EventActivityPresenter();

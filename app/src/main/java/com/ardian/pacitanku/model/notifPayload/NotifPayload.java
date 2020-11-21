@@ -5,14 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
+// model yang akan digunakan untuk mengirim notif
+// ke server custom lalu ke firebase
 public class NotifPayload extends BaseModel {
 
+    // api key server
     @SerializedName("api_key")
     public String apiKey = "";
 
+    // topic notifikasi yang akan di kirimkan
     @SerializedName("topic")
     public String topic = "";
 
+    // data payload berupa map
     @SerializedName("data")
     public Map<String,String> data;
 

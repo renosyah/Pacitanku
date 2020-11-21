@@ -20,37 +20,41 @@ import retrofit2.http.Part;
 
 public interface RetrofitService {
 
-        @Multipart
-        @POST("/api/upload_file.php")
-        public Observable<ResponseModel<UploadResponse>> upload(@Part MultipartBody.Part file);
+    // fungsi yang akan dipanggil untuk mengupload image
+    // ke kustom server
+    @Multipart
+    @POST("/api/upload_file.php")
+    public Observable<ResponseModel<UploadResponse>> upload(@Part MultipartBody.Part file);
 
-        @POST("/api/v1/payload")
-        public Observable<ResponseBody> push(@Body NotifPayload notifPayload);
+    // fungsi yang akan dipanggil untuk mengirim notif
+    // ke kustom server
+    @POST("/api/v1/payload")
+    public Observable<ResponseBody> push(@Body NotifPayload notifPayload);
 
     // fungsi static yg nantinya akan
-        // dipanggil, sama seperti koneksi ke db
-        // namun ini untuk api
-        public static RetrofitService create(String url)  {
+    // dipanggil, sama seperti koneksi ke db
+    // namun ini untuk api
+    public static RetrofitService create(String url)  {
 
-            // deklarasi gson builder
-            // fungsinya agar dapat
-            // melakukan parsing json
-            // meskipun json kurang valid
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
+        // deklarasi gson builder
+        // fungsinya agar dapat
+        // melakukan parsing json
+        // meskipun json kurang valid
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
-            // membuat instance retrofit
-            // yg nantinya ini yg akan digunakan untuk
-            // melakukan request ke api
-            Retrofit retrofit = new Retrofit.Builder()
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .baseUrl(url.isEmpty() ? BuildConfig.HOSTING_URL : url)
-                    .build();
+        // membuat instance retrofit
+        // yg nantinya ini yg akan digunakan untuk
+        // melakukan request ke api
+        Retrofit retrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(url.isEmpty() ? BuildConfig.HOSTING_URL : url)
+                .build();
 
-            // balikan instance
-            // sebagai nilai balik
-            return retrofit.create(RetrofitService.class);
-        }
+        // balikan instance
+        // sebagai nilai balik
+        return retrofit.create(RetrofitService.class);
+    }
 }

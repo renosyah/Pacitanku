@@ -18,7 +18,13 @@ public interface ActivityComponent {
 
     // fungsi yg akan digunakan untuk diinject di activity ExploreActivity
     void inject(LoginActivity loginActivity);
+
+    // fungsi yg akan digunakan untuk diinject di activity register
     void inject(RegisterActivity registerActivity);
+
+    // fungsi yg akan digunakan untuk diinject di activity home
     void inject(HomeActivity homeActivity);
+
+    // fungsi yg akan digunakan untuk diinject di activity event
     void inject(EventActivity eventActivity);
 }
