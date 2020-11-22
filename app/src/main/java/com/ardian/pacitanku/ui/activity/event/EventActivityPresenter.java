@@ -53,6 +53,7 @@ public class EventActivityPresenter implements EventActivityContract.Presenter {
         // siapkan data berupa map dan
         // isi nama serta alamat event
         HashMap<String ,String> data = new HashMap<>();
+        data.put("id",event.id);
         data.put("name",event.name);
         data.put("address",event.address);
 

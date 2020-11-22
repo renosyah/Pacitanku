@@ -173,17 +173,42 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
         // jika pesan tidak kosong
         if (remoteMessage.getData().size() > 0) {
 
-            // buat instance event baru
-            EventModel e = new EventModel();
+            // dapatkan id eventnya
+            String id = remoteMessage.getData().get("id");
 
-            // isi nama
-            e.name = remoteMessage.getData().get("name");
+            // query dari database
+            DatabaseReference ref = firebaseDatabase.getReference(BuildConfig.DB);
+            ref.child("events")
+                    .orderByChild("id")
+                    .equalTo(id)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // iterasi array
+                            for (DataSnapshot postSnapshot: snapshot.getChildren()) {
 
-            // isi alamat
-            e.address = remoteMessage.getData().get("address");
+                                // dapatkan data event
+                                EventModel event = postSnapshot.getValue(EventModel.class);
 
-            // kirim notifikasi
-            sendNotification(e);
+                                // check jika tidak null dan belum disimpan
+                                // notif cache
+                                if ((event != null) ){
+
+                                    // kirim notifikasi
+                                    sendNotification(event);
+
+                                    // paksa selesai loop
+                                    break;
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }
     }
 
