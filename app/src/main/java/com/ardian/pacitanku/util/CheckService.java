@@ -39,6 +39,9 @@ public class CheckService {
         return false;
     }
 
+    // simpel fungsi untuk mengecek apakah
+    // service sedang running
+    // dengan memberikan nama class service
     public static boolean isMyServiceRunning(Context c,Class<?> s) {
         ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
         assert manager != null;

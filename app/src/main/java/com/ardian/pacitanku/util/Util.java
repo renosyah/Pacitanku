@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Util {
+
+    // fungsi untuk menambah tanggal
     public static Date getDate(int daysAdded){
         Date dt = new  Date();
         Calendar c = Calendar.getInstance();
